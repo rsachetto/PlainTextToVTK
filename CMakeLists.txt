@@ -3,4 +3,15 @@ project(PlainTextToVTK C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(PlainTextToVTK main.c)
+SET( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin )
+
+ADD_SUBDIRECTORY(src/string)
+ADD_SUBDIRECTORY(src/vtk_utils)
+ADD_SUBDIRECTORY(src/hash)
+ADD_SUBDIRECTORY(src/file_utils)
+
+add_executable(PlainTextToVTK src/main.c)
+
+add_dependencies(PlainTextToVTK string vtk_utils)
+
+target_link_libraries(PlainTextToVTK string vtk_utils file_utils m)
