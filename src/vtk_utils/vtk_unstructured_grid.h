@@ -34,9 +34,8 @@ bool new_vtk_unstructured_grid_from_file(struct vtk_unstructured_grid **vtk_grid
 void save_vtk_unstructured_grid_as_vtu(struct vtk_unstructured_grid *vtk_grid, char *filename, bool binary);
 void save_vtk_unstructured_grid_as_vtu_compressed(struct vtk_unstructured_grid *vtk_grid, char *filename, int compression_level);
 void save_vtk_unstructured_grid_as_legacy_vtk(struct vtk_unstructured_grid *vtk_grid, char *filename, bool binary);
-
-bool convert_to_files_in_dir_to_vtu(const char *input_dir, const char *output_dir, const char *file_prefix, bool animate_grid, bool compressed, bool plain);
-
 void free_vtk_unstructured_grid(struct vtk_unstructured_grid *vtk_grid);
+
+bool convert_to_files_in_dir_to_vtu(const char *input_dir, const char *output_dir, const char *file_prefix, bool animate_grid, bool compressed, bool plain, bool verbose);
 
 #endif // MONOALG3D_VTK_UNSTRUCTURED_GRID_H

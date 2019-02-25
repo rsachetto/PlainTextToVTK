@@ -888,7 +888,7 @@ void save_vtk_unstructured_grid_as_legacy_vtk(struct vtk_unstructured_grid *vtk_
     fclose(output_file);
 }
 
-bool convert_to_files_in_dir_to_vtu(const char *input_dir, const char *output_dir, const char *file_prefix, const bool animate_grid, const bool compressed, const bool plain) {
+bool convert_to_files_in_dir_to_vtu(const char *input_dir, const char *output_dir, const char *file_prefix, const bool animate_grid, const bool compressed, const bool plain, const bool verbose) {
 
     sds *files_in_dir = list_files_from_dir(input_dir, file_prefix);
 
@@ -920,7 +920,9 @@ bool convert_to_files_in_dir_to_vtu(const char *input_dir, const char *output_di
         full_output_file_path = sdscat(full_output_file_path, "/");
         full_output_file_path = sdscat(full_output_file_path, new_vtk_file);
 
-        //printf("CONVERTING %s to %s\n", full_input_file_path, full_output_file_path);
+        if(verbose)
+            printf("CONVERTING %s to %s\n", full_input_file_path, full_output_file_path);
+
         if(compressed) {
             save_vtk_unstructured_grid_as_vtu_compressed(grid, full_output_file_path, 6);
         }
