@@ -5,12 +5,23 @@
 #ifndef MONOALG3D_DATA_UTILS_H
 #define MONOALG3D_DATA_UTILS_H
 
-#include "../hash/hash_common.h"
 #include "../string/sds.h"
 
 #ifdef COMPILE_ZLIB
 #include <zlib.h>
 #endif
+
+
+struct point_3d {
+    float x, y, z;
+};
+
+
+struct point_hash_entry {
+    struct point_3d key;
+    int value;
+};
+
 
 int invert_bytes(int data);
 sds write_binary_point(sds output_string, struct point_3d *p);

@@ -5,9 +5,9 @@
 #ifndef MONOALG3D_VTK_UNSTRUCTURED_GRID_H
 #define MONOALG3D_VTK_UNSTRUCTURED_GRID_H
 
-#include "../hash/point_hash.h"
 #include <stdint.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 struct vtk_unstructured_grid {
     uint32_t num_points;

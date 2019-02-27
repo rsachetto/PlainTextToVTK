@@ -6,7 +6,6 @@
 #include <stdarg.h>
 
 #include "file_utils.h"
-#include "../includes/stretchy_buffer.h"
 #include "../string/sds.h"
 #include <stdio.h>
 #include <fcntl.h>
@@ -30,7 +29,7 @@
 
 #endif
 
-
+#include "../includes/stb_ds.h"
 
 
 static FILE *logfile = NULL;
@@ -252,7 +251,7 @@ char **read_lines(const char *filename) {
     char * line = NULL;
     while ((read = getline(&line, &len, fp)) != -1) {
         line[strlen(line) - 1] = '\0';
-        sb_push(lines, strdup(line));
+        arrput(lines, strdup(line));
     }
 
     free(line);
@@ -279,16 +278,14 @@ char **list_files_from_dir(const char *dir, const char *prefix) {
 
     while ((dirp = readdir(dp)) != NULL) {
 
-        char *file_name = strdup(dirp->d_name);
-
         if (prefix) {
 
-            if (strncmp(prefix, file_name, strlen(prefix)) == 0) {
-                sb_push(files, file_name);
+            if (strncmp(prefix, dirp->d_name, strlen(prefix)) == 0) {
+                arrput(files, strdup(dirp->d_name));
             }
 
         } else {
-            sb_push(files, file_name);
+            arrput(files, strdup(dirp->d_name));
         }
     }
 
@@ -299,13 +296,13 @@ char **list_files_from_dir(const char *dir, const char *prefix) {
 
 void free_lines_or_dir_list(char **list) {
 
-    int lines_number = sb_count(list);
+    int lines_number = arrlen(list);
 
     for(int i = 0; i < lines_number; i++) {
         free(list[i]);
     }
 
-    sb_free(list);
+    arrfree(list);
 
 }
 
@@ -424,7 +421,12 @@ void create_dir(const char *out_dir) {
                 exit (EXIT_FAILURE);
             }
         }
+
     }
+
+    sdsfree(new_dir);
+
+    sdsfreesplitres(all_dirs, dirs_count);
 
 }
 

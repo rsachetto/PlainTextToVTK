@@ -8,9 +8,9 @@ ADD_LIBRARY(vtk_utils ${LIB_TYPE} vtk_unstructured_grid.c vtk_unstructured_grid.
 
 IF(ZLIB_FOUND)
     SET (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I \"${ZLIB_INCLUDE_DIRS}\" -DCOMPILE_ZLIB")
-    TARGET_LINK_LIBRARIES(vtk_utils hashes string file_utils ${ZLIB_LIBRARIES})
+    TARGET_LINK_LIBRARIES(vtk_utils string file_utils ${ZLIB_LIBRARIES})
 ELSE()
-    TARGET_LINK_LIBRARIES(vtk_utils hashes string file_utils)
+    TARGET_LINK_LIBRARIES(vtk_utils string file_utils)
 ENDIF(ZLIB_FOUND)
 
 #######################################################################

@@ -6,6 +6,7 @@
 #include "vtk_utils/vtk_unstructured_grid.h"
 #include "string/sds.h"
 #include "file_utils/file_utils.h"
+#include "vtk_utils/data_utils.h"
 
 int main(int argc, char **argv) {
 
@@ -15,12 +16,14 @@ int main(int argc, char **argv) {
     bool dont_compress = false;
     bool plain = false;
     bool verbose = false;
+    bool not_adaptive = false;
 
     kgflags_string("input_dir", NULL, "Directory containing the text files to be converted.", true, &input_dir);
     kgflags_string("output_dir", NULL, "Directory to save the converted files. The default is input_dir/vtu", false, &output_dir);
     kgflags_string("input_prefix", NULL, "Name of the files to be converted without the extension.", true, &file_prefix);
     kgflags_bool("dont_compress", false, "Do not compress the output. The default is to compress", false, &dont_compress);
     kgflags_bool("plain_text", false, "Save the vtu data in plain text. The default is to save in binary", false, &plain);
+    kgflags_bool("not_adaptive", false, "If this flag is set the we load the grid only from the first file. If it is false we load a new grid for every file.", false, &not_adaptive);
     kgflags_bool("verbose", false, "Verbose output", false, &verbose);
 
 
@@ -40,11 +43,9 @@ int main(int argc, char **argv) {
         output_dir = strdup(out);
     }
 
-    bool animate_grid = true;
-
     create_dir(output_dir);
 
-    convert_to_files_in_dir_to_vtu(input_dir, output_dir, file_prefix, animate_grid, !dont_compress, plain, verbose);
+    convert_to_files_in_dir_to_vtu(input_dir, output_dir, file_prefix, !not_adaptive, !dont_compress, plain, verbose);
 
     return 0;
 }
